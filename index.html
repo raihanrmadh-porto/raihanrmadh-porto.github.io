@@ -127,7 +127,7 @@
   .gallery{display:flex;flex-wrap:wrap;gap:10px}
   .gallery .th{position:relative;flex:1 1 calc(33.333% - 10px);aspect-ratio:4/3;border-radius:16px;overflow:hidden;cursor:zoom-in;border:1px solid var(--line);
     background:rgba(255,255,255,.06);padding:0;box-shadow:0 6px 20px rgba(5,10,30,.3)}
-  .gallery .th img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .3s;display:block}
+  .gallery .th img{width:100%;height:100%;object-fit:cover;object-position:center 35%;transition:transform .5s,filter .3s;display:block}
   .gallery .th:hover img{transform:scale(1.06);filter:brightness(1.08)}
   .gallery .th:first-child{flex-basis:100%;aspect-ratio:16/9}
   .gallery.two .th{flex-basis:calc(50% - 10px)}.gallery.two .th:first-child{flex-basis:calc(50% - 10px);aspect-ratio:4/3}
@@ -546,12 +546,12 @@
     oilspill: ['Current Velocity','Oilspill Simulation Verification','Time Series Weathering','Wind Velocity','OceanParcels Oilspill Simulation','PieChart Weathering'],
     rs: ['Thermal Front','Klorofil-A','Shoreline','Oilspill','Coral Reef','Coral Reef & Sea Grass'],
     current: ['Topography & Current Vectors','Current Rose','Spatial Current Velocity','Ekman Transport Model','Salinity Contours'],
-    tsunami: ['Tsunami Model','Inundation'],
-    wave: ['Averaged Wave Period','Extreme Value Analysis'],
+    tsunami: ['Tsunami Propagation (01:41:00)','Inundation'],
+    wave: ['Spatial Hs & Tp (2019–2020)','Extreme Value Analysis'],
     marine: ['Tide Model','Model Validation','Current Rose'],
     sediment: ['Seabed Elevation Changes'],
     sinergi: ['Weather station installation','Solar-powered buoy','Waste incinerator','VR coral reef experience booth'],
-    pesisir: ['Peduli Pesisir team','Building the wooden breakwater','Wooden breakwater'],
+    pesisir: ['Peduli Pesisir team','Wooden breakwater'],
     imarest: ['Open recruitment publication','IMarEST ITB officers','President of IMarEST ITB','Industry talk session','IMarEST ITB team','Program publications'],
     mwa: ['Collaboration with student association','Strategic Relations team','Head of Strategic Relation','Student forum','Sapa Rektor x Buka Bersama'],
     tec: ['TEC ITB cabinet','President of TEC ITB','Speaking at TEC event','Online member session','Visit to Microsoft','Programs & publications']
