@@ -85,7 +85,7 @@
 
   /* ITEMS */
   .item{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;margin-bottom:28px}
-  .item.rev .media{order:-1}
+  .item.rev .gwrap{order:-1}
   .item h3{font-family:Sora;font-size:1.3rem;line-height:1.3}
   .item .org{color:var(--accent2);font-weight:600;margin-top:4px}
   .item .when{color:var(--muted);font-size:.9rem;margin:2px 0 16px}
@@ -121,10 +121,43 @@
   .cgrid small{color:var(--muted);font-size:.85rem;word-break:break-all}
   footer{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 0 40px;border-top:1px solid var(--line)}
 
+
+
+  /* GALLERY */
+  .gallery{display:flex;flex-wrap:wrap;gap:10px}
+  .gallery .th{position:relative;flex:1 1 calc(33.333% - 10px);aspect-ratio:4/3;border-radius:16px;overflow:hidden;cursor:zoom-in;border:1px solid var(--line);
+    background:rgba(255,255,255,.06);padding:0;box-shadow:0 6px 20px rgba(5,10,30,.3)}
+  .gallery .th img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .3s;display:block}
+  .gallery .th:hover img{transform:scale(1.06);filter:brightness(1.08)}
+  .gallery .th:first-child{flex-basis:100%;aspect-ratio:16/9}
+  .gallery.two .th{flex-basis:calc(50% - 10px)}.gallery.two .th:first-child{flex-basis:calc(50% - 10px);aspect-ratio:4/3}
+  .gallery .th:not(:first-child){max-height:170px}
+  .gallery .th .more{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 1.4rem Sora,sans-serif;
+    background:rgba(17,29,61,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .gallery .th.fig img{object-fit:contain;background:#fff}
+  .proj .gwrap{padding:14px 14px 0}.proj .gallery-hint{margin-top:6px}
+  .gallery-hint{font-size:.8rem;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px}
+
   /* LIGHTBOX */
-  #lb{position:fixed;inset:0;background:rgba(10,18,40,.6);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center;z-index:100;padding:24px;cursor:zoom-out}
+  #lb{position:fixed;inset:0;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;
+    background:rgba(10,18,40,.65);-webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%)}
   #lb.on{display:flex}
-  #lb img{max-height:90vh;max-width:95vw;border-radius:12px}
+  #lb .stage{position:relative;max-width:min(1200px,92vw);max-height:76vh;display:flex;align-items:center;justify-content:center}
+  #lb .stage img{max-width:100%;max-height:76vh;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.5);user-select:none}
+  #lb .cap{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.06));border:1px solid var(--line);border-radius:999px;
+    padding:8px 18px;font-size:.92rem;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);text-align:center;max-width:90vw}
+  #lb .cap b{font-family:Sora}
+  #lb .cap span{color:var(--muted);margin-left:8px}
+  #lb button{position:absolute;border:1px solid var(--line);color:#fff;width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:1.3rem;
+    background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;transition:background .2s}
+  #lb button:hover{background:rgba(255,255,255,.25)}
+  #lb .prev{left:max(16px,2vw);top:50%;transform:translateY(-50%)}
+  #lb .next{right:max(16px,2vw);top:50%;transform:translateY(-50%)}
+  #lb .close{top:18px;right:18px}
+  #lb .dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:90vw}
+  #lb .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}
+  #lb .dots i.on{background:#fff;width:22px;border-radius:99px}
+  @media (max-width:860px){#lb .prev,#lb .next{top:auto;bottom:22px;transform:none}#lb{padding-bottom:84px}.gallery{gap:8px}}
 
   /* REVEAL */
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
@@ -132,7 +165,7 @@
 
   @media (max-width:860px){
     .hero .wrap,.about,.item{grid-template-columns:1fr}
-    .item.rev .media{order:0}
+    .item.rev .gwrap{order:0}
     .photo{order:-1}
     .photo img{width:220px}
     .links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:rgba(17,29,61,.85);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
@@ -249,7 +282,7 @@
           <span>Ocean Waves</span><span>Applied Oceanography Field Course</span>
         </div>
       </div>
-      <div class="media"><img src="images/teaching.jpg" alt="Teaching and field assistant activities" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="teaching"></div></div>
     </div>
 
     <div class="item rev reveal">
@@ -263,7 +296,7 @@
           <li>Processed, quality-controlled, and validated hydrographic survey datasets in accordance with IHO S-44 and national hydrographic survey standards, ensuring data accuracy, consistency, and reliability for final survey outputs.</li>
         </ul>
       </div>
-      <div class="media"><img src="images/hydrographic.jpg" alt="Hydrographic survey activities" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="hydrographic"></div></div>
     </div>
 
     <div class="item reveal" style="margin-top:20px">
@@ -279,7 +312,7 @@
         </ul>
         <div class="chips"><span>MIKE 21</span><span>Excel</span><span>Google Colab</span><span>VS Code</span></div>
       </div>
-      <div class="media"><img src="images/amdal.jpg" alt="Hydrodynamic modelling presentation" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="amdal"></div></div>
     </div>
   </div>
 </section>
@@ -291,7 +324,7 @@
     <div class="grid">
 
       <article class="card proj reveal">
-        <div class="media"><img src="images/oil-spill.jpg" alt="Oil spill trajectory modelling" loading="lazy"></div>
+        <div class="gwrap"><div class="gallery" data-g="oilspill"></div></div>
         <div class="body">
           <span class="badge">Bachelor's Final Project</span>
           <h3>Oil Spill Trajectory Modelling in the ONWJ Block</h3>
@@ -306,7 +339,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="media"><img src="images/remote-sensing.jpg" alt="Oceanographic remote sensing maps" loading="lazy"></div>
+        <div class="gwrap"><div class="gallery" data-g="rs"></div></div>
         <div class="body">
           <h3>Oceanographic Remote Sensing</h3>
           <div class="sub">Satellite image processing &amp; spatial analysis</div>
@@ -319,7 +352,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="media"><img src="images/ocean-current.jpg" alt="Ocean current analysis" loading="lazy"></div>
+        <div class="gwrap"><div class="gallery" data-g="current"></div></div>
         <div class="body">
           <h3>Ocean Current Analysis</h3>
           <div class="sub">Ocean current modelling &amp; spatial analysis</div>
@@ -332,7 +365,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="media"><img src="images/tsunami.jpg" alt="Tsunami modelling" loading="lazy"></div>
+        <div class="gwrap"><div class="gallery" data-g="tsunami"></div></div>
         <div class="body">
           <h3>Tsunami Modelling &amp; Inundation Analysis</h3>
           <div class="sub">Propagation &amp; coastal impact</div>
@@ -345,7 +378,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="media"><img src="images/wave.jpg" alt="Ocean wave forecasting" loading="lazy"></div>
+        <div class="gwrap"><div class="gallery" data-g="wave"></div></div>
         <div class="body">
           <h3>Ocean Wave Forecasting</h3>
           <div class="sub">Wave modelling &amp; statistical analysis</div>
@@ -358,7 +391,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="media"><img src="images/marine-env.jpg" alt="Marine environmental modelling" loading="lazy"></div>
+        <div class="gwrap"><div class="gallery" data-g="marine"></div></div>
         <div class="body">
           <h3>Marine Environmental Modelling</h3>
           <div class="sub">Tidal modelling &amp; hydrodynamic analysis</div>
@@ -371,7 +404,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="media"><img src="images/sediment.jpg" alt="Sediment transport" loading="lazy" style="object-fit:contain;background:#fff"></div>
+        <div class="gwrap"><div class="gallery" data-g="sediment"></div></div>
         <div class="body">
           <h3>Sediment Transport</h3>
           <div class="sub">Coastal morphodynamics &amp; seabed change analysis</div>
@@ -403,7 +436,7 @@
           <li>Implemented sustainability solutions, including a waste incinerator and solar charging station to address local environmental and infrastructure needs.</li>
         </ul>
       </div>
-      <div class="media"><img src="images/sinergi-tunda.jpg" alt="Sinergi Tunda community project" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="sinergi"></div></div>
     </div>
 
     <div class="item rev reveal">
@@ -416,7 +449,7 @@
           <li>Supported the development of coastal vulnerability maps and delivered disaster mitigation awareness activities to strengthen local understanding of coastal risks and mitigation measures.</li>
         </ul>
       </div>
-      <div class="media"><img src="images/peduli-pesisir.jpg" alt="Peduli Pesisir community project" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="pesisir"></div></div>
     </div>
   </div>
 </section>
@@ -437,7 +470,7 @@
           <li>Established collaborations with international marine industry professionals and academic institutions, including inviting speakers from international companies.</li>
         </ul>
       </div>
-      <div class="media"><img src="images/imarest.jpg" alt="IMarEST ITB Student Section" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="imarest"></div></div>
     </div>
 
     <div class="item rev reveal">
@@ -451,7 +484,7 @@
           <li>Coordinated cross-community and institutional engagement to strengthen student representation and communication with ITB's institutional governance.</li>
         </ul>
       </div>
-      <div class="media"><img src="images/mwa-wm.jpg" alt="MWA-WM ITB" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="mwa"></div></div>
     </div>
 
     <div class="item reveal">
@@ -465,7 +498,7 @@
           <li>Managed strategic partnerships with industry professionals, student organizations, and external stakeholders.</li>
         </ul>
       </div>
-      <div class="media"><img src="images/tec.jpg" alt="Techno Entrepreneur Club ITB" loading="lazy"></div>
+      <div class="gwrap"><div class="gallery" data-g="tec"></div></div>
     </div>
   </div>
 </section>
@@ -494,16 +527,89 @@
 
 <footer>© <span id="yr"></span> Raihan Ramadhan · Chasing horizons, exploring depths.</footer>
 
-<div id="lb" onclick="this.classList.remove('on')"><img alt=""></div>
+<div id="lb" role="dialog" aria-modal="true">
+  <button class="close" aria-label="Tutup">✕</button>
+  <button class="prev" aria-label="Sebelumnya">‹</button>
+  <div class="stage"><img alt=""></div>
+  <button class="next" aria-label="Berikutnya">›</button>
+  <div class="cap"></div>
+  <div class="dots"></div>
+</div>
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
-  // Lightbox: klik gambar untuk memperbesar
-  const lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
-  document.querySelectorAll('.media img').forEach(img => img.parentElement.addEventListener('click', () => {
-    lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('on');
-  }));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
+  // ===== Dokumentasi: tambah/ubah foto cukup di sini (file ada di images/docs/) =====
+  const DOCS = {
+    teaching: ['Teaching session','Total station survey','Online lecture session','Field instrument preparation','Applied Oceanography Field Course team'],
+    hydrographic: ['Survey vessel bridge','Survey team on board','LiDAR drone preparation','Night operations at port','Sensor deployment','Real-time survey data acquisition','Instrument deployment at sea','Bathymetric survey result'],
+    amdal: ['Hydrodynamic model presentation'],
+    oilspill: ['Current Velocity','Oilspill Simulation Verification','Time Series Weathering','Wind Velocity','OceanParcels Oilspill Simulation','PieChart Weathering'],
+    rs: ['Thermal Front','Klorofil-A','Shoreline','Oilspill','Coral Reef','Coral Reef & Sea Grass'],
+    current: ['Topography & Current Vectors','Current Rose','Spatial Current Velocity','Ekman Transport Model','Salinity Contours'],
+    tsunami: ['Tsunami Model','Inundation'],
+    wave: ['Averaged Wave Period','Extreme Value Analysis'],
+    marine: ['Tide Model','Model Validation','Current Rose'],
+    sediment: ['Seabed Elevation Changes'],
+    sinergi: ['Weather station installation','Solar-powered buoy','Waste incinerator','VR coral reef experience booth'],
+    pesisir: ['Peduli Pesisir team','Building the wooden breakwater','Wooden breakwater'],
+    imarest: ['Open recruitment publication','IMarEST ITB officers','President of IMarEST ITB','Industry talk session','IMarEST ITB team','Program publications'],
+    mwa: ['Collaboration with student association','Strategic Relations team','Head of Strategic Relation','Student forum','Sapa Rektor x Buka Bersama'],
+    tec: ['TEC ITB cabinet','President of TEC ITB','Speaking at TEC event','Online member session','Visit to Microsoft','Programs & publications']
+  };
+  const FIGS = ['oilspill','rs','current','tsunami','wave','marine','sediment']; // grafik/peta: ditampilkan utuh
+  const MAX_THUMBS = 6;
+
+  const lb = document.getElementById('lb'), lbImg = lb.querySelector('.stage img'),
+        lbCap = lb.querySelector('.cap'), lbDots = lb.querySelector('.dots');
+  let cur = { g: null, i: 0, title: '' };
+  const src = (g, i) => `images/docs/${g}-${i + 1}.jpg`;
+
+  document.querySelectorAll('.gallery').forEach(el => {
+    const g = el.dataset.g, caps = DOCS[g]; if (!caps) return;
+    const title = (el.closest('.item, .proj')?.querySelector('h3')?.textContent || '').trim();
+    el.classList.toggle('one', caps.length === 1);
+    el.classList.toggle('two', caps.length === 2);
+    caps.slice(0, MAX_THUMBS).forEach((c, i) => {
+      const b = document.createElement('button');
+      b.className = 'th' + (FIGS.includes(g) ? ' fig' : '');
+      b.setAttribute('aria-label', 'Lihat foto: ' + c);
+      b.innerHTML = `<img src="${src(g, i)}" alt="${c}" loading="lazy">`;
+      if (i === MAX_THUMBS - 1 && caps.length > MAX_THUMBS) b.innerHTML += `<span class="more">+${caps.length - MAX_THUMBS + 1}</span>`;
+      b.onclick = () => open(g, i, title);
+      el.appendChild(b);
+    });
+    const hint = document.createElement('div'); hint.className = 'gallery-hint';
+    hint.textContent = `📷 ${caps.length} dokumentasi · klik untuk melihat`;
+    el.after(hint);
+  });
+
+  function show() {
+    const caps = DOCS[cur.g];
+    lbImg.src = src(cur.g, cur.i); lbImg.alt = caps[cur.i];
+    lbCap.innerHTML = `<b>${caps[cur.i]}</b><span>${cur.i + 1} / ${caps.length}</span>`;
+    lbDots.innerHTML = caps.map((_, i) => `<i class="${i === cur.i ? 'on' : ''}" data-i="${i}"></i>`).join('');
+    const multi = caps.length > 1;
+    lb.querySelector('.prev').style.display = lb.querySelector('.next').style.display = multi ? '' : 'none';
+    lbDots.style.display = multi ? '' : 'none';
+    [cur.i - 1, cur.i + 1].forEach(j => { if (caps[j]) new Image().src = src(cur.g, j); }); // preload
+  }
+  function open(g, i, title) { cur = { g, i, title }; show(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function close() { lb.classList.remove('on'); document.body.style.overflow = ''; }
+  function step(d) { const n = DOCS[cur.g].length; cur.i = (cur.i + d + n) % n; show(); }
+
+  lb.querySelector('.prev').onclick = e => { e.stopPropagation(); step(-1); };
+  lb.querySelector('.next').onclick = e => { e.stopPropagation(); step(1); };
+  lb.querySelector('.close').onclick = close;
+  lbDots.onclick = e => { if (e.target.dataset.i) { cur.i = +e.target.dataset.i; show(); } };
+  lb.onclick = e => { if (e.target === lb) close(); };
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1);
+  });
+  let x0 = null; // geser (swipe) di HP
+  lb.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+  lb.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1); x0 = null; });
+
   // Animasi muncul saat discroll
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
