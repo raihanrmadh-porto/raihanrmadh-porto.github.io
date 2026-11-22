@@ -164,6 +164,94 @@
   #lb .dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:90vw}
   #lb .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}
   #lb .dots i.on{background:#fff;width:22px;border-radius:99px}
+
+  /* ================= ANIMATIONS ================= */
+  /* scroll progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);z-index:60;
+    background:linear-gradient(90deg,#7fb3ff,#a9e7ff,#ffffff)}
+  /* drifting light blobs behind the glass */
+  .blobs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .blobs i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5}
+  .blobs i:nth-child(1){width:42vw;height:42vw;left:-8vw;top:5vh;background:#3d6dff;animation:drift1 22s ease-in-out infinite alternate}
+  .blobs i:nth-child(2){width:36vw;height:36vw;right:-6vw;top:45vh;background:#7fb8ff;opacity:.35;animation:drift2 26s ease-in-out infinite alternate}
+  .blobs i:nth-child(3){width:28vw;height:28vw;left:35vw;top:70vh;background:#5a7bd6;opacity:.3;animation:drift3 30s ease-in-out infinite alternate}
+  @keyframes drift1{to{transform:translate(18vw,22vh) scale(1.15)}}
+  @keyframes drift2{to{transform:translate(-20vw,-18vh) scale(.9)}}
+  @keyframes drift3{to{transform:translate(-14vw,-35vh) scale(1.2)}}
+  body::after{display:none}
+
+  /* hero entrance (staggered) */
+  .hero .anim{opacity:0;transform:translateY(26px);animation:up .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--i,0) * .12s + .15s)}
+  @keyframes up{to{opacity:1;transform:none}}
+  .roles span{opacity:0;transform:translateY(12px) scale(.95);animation:up .6s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.55s + var(--i) * .1s);transition:background .25s,transform .25s}
+  .roles span:hover{background:rgba(255,255,255,.22);transform:translateY(-2px)}
+  /* shimmering name */
+  .hero h1 .shine{background:linear-gradient(100deg,#fff 0%,#fff 40%,#a9e7ff 50%,#fff 60%,#fff 100%);background-size:250% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s ease-in-out 1.4s infinite}
+  @keyframes shine{0%{background-position:100% 0}60%,100%{background-position:-50% 0}}
+  /* photo: pop in, float, tilt */
+  .photo{opacity:0;animation:pop 1.1s cubic-bezier(.2,.7,.2,1) .35s forwards;perspective:900px}
+  @keyframes pop{from{opacity:0;transform:translateY(30px) scale(.94)}to{opacity:1;transform:none}}
+  .photo .tilt{transition:transform .2s ease-out;transform-style:preserve-3d}
+  .photo .float{animation:float 6s ease-in-out 1.5s infinite}
+  @keyframes float{50%{transform:translateY(-10px)}}
+  .photo::after{animation:ring 6s ease-in-out 1.5s infinite}
+  @keyframes ring{50%{transform:translate(6px,6px);border-color:rgba(169,231,255,.6)}}
+
+  /* ocean waves at the bottom of the hero */
+  .waves{position:absolute;left:0;right:0;bottom:-2px;height:90px;pointer-events:none;opacity:.9}
+  .waves svg{position:absolute;bottom:0;width:200%;height:100%}
+  .waves .w1{animation:wave 14s linear infinite;opacity:.35}
+  .waves .w2{animation:wave 9s linear infinite reverse;opacity:.22}
+  .waves .w3{animation:wave 20s linear infinite;opacity:.15}
+  @keyframes wave{to{transform:translateX(-50%)}}
+  /* rising bubbles */
+  .bubbles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .bubbles b{position:absolute;bottom:-20px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);
+    animation:rise linear infinite;opacity:0}
+  @keyframes rise{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:.8}90%{opacity:.5}100%{transform:translateY(-520px) translateX(30px);opacity:0}}
+
+  /* section titles: line grows in */
+  .sec-head .line{transform-origin:left;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.2,.7,.2,1) .2s}
+  .sec-head.in .line{transform:scaleX(1)}
+  .sec-head .num{display:inline-block;transition:transform .8s}
+  /* stagger children of revealed blocks */
+  .reveal{transition-delay:var(--d,0s)}
+  .reveal .chips span{opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s,background .2s}
+  .reveal.in .chips span{opacity:1;transform:none}
+  .chips span:hover{background:rgba(255,255,255,.22)}
+  /* cards: lift + glow on hover */
+  .card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+  .card:hover{transform:translateY(-4px);border-color:rgba(169,231,255,.35);
+    box-shadow:0 18px 50px rgba(5,10,30,.45),0 0 0 1px rgba(169,231,255,.08),inset 0 1px 0 rgba(255,255,255,.3)}
+  .item .card:hover,.about .card:hover{transform:translateY(-3px)}
+  /* gallery thumbs pop in one by one */
+  .gallery .th{opacity:0;transform:scale(.96);transition:opacity .5s,transform .5s,box-shadow .3s}
+  .reveal.in .gallery .th,.gwrap.in .gallery .th{opacity:1;transform:none}
+  .gallery .th:hover{box-shadow:0 12px 30px rgba(5,10,30,.5)}
+  /* lightbox image transition */
+  #lb .stage img{animation:lbin .35s ease}
+  @keyframes lbin{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+  /* nav active link */
+  .links a{position:relative}
+  .links a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:2px;background:#a9e7ff;transform:scaleX(0);transition:transform .3s}
+  .links a:hover::after,.links a.active::after{transform:scaleX(1)}
+  .links a.active{color:#fff}
+  /* buttons shine */
+  .btn{position:relative;overflow:hidden}
+  .btn::before{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;transform:skewX(-20deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transition:left .6s}
+  .btn:hover::before{left:120%}
+  /* contact icons bob */
+  .cgrid a:hover svg{animation:bob .6s ease}
+  @keyframes bob{50%{transform:translateY(-5px) rotate(-6deg)}}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .hero .anim,.roles span,.photo,.gallery .th,.reveal .chips span{opacity:1!important;transform:none!important}
+    .sec-head .line{transform:none}
+  }
+
   @media (max-width:860px){#lb .prev,#lb .next{top:auto;bottom:22px;transform:none}#lb{padding-bottom:84px}.gallery{gap:8px}}
 
 
@@ -191,6 +279,8 @@
 </style>
 </head>
 <body>
+<div id="progress"></div>
+<div class="blobs"><i></i><i></i><i></i></div>
 
 <nav>
   <div class="wrap">
@@ -211,20 +301,26 @@
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <div class="eyebrow">Portfolio · Oceanography ITB</div>
-      <h1>Raihan<br>Ramadhan</h1>
+      <div class="eyebrow anim" style="--i:0">Portfolio · Oceanography ITB</div>
+      <h1 class="anim" style="--i:1"><span class="shine">Raihan<br>Ramadhan</span></h1>
       <div class="roles">
-        <span>GIS Analyst</span><span>Ocean Modeller</span><span>Marine Surveyor</span><span>Coastal Engineer</span>
+        <span style="--i:0">GIS Analyst</span><span style="--i:1">Ocean Modeller</span><span style="--i:2">Marine Surveyor</span><span style="--i:3">Coastal Engineer</span>
       </div>
-      <p class="quote">“Chasing horizons, exploring depths.”</p>
-      <div class="btns">
+      <p class="quote anim" style="--i:5">“Chasing horizons, exploring depths.”</p>
+      <div class="btns anim" style="--i:6">
         <a href="#projects" class="btn primary">See my work</a>
         <a href="#contact" class="btn ghost">Get in touch</a>
         <!-- Kalau mau tombol download CV/PDF, taruh file PDF di repo lalu aktifkan baris ini: -->
         <!-- <a href="Portofolio_Raihan_Ramadhan.pdf" class="btn ghost" download>Download PDF</a> -->
       </div>
     </div>
-    <div class="photo"><img src="images/profile.jpg" alt="Raihan Ramadhan"></div>
+    <div class="photo"><div class="tilt"><div class="float"><img src="images/profile.jpg" alt="Raihan Ramadhan"></div></div></div>
+  </div>
+  <div class="bubbles" aria-hidden="true"></div>
+  <div class="waves" aria-hidden="true">
+    <svg class="w3" viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="#a9e7ff" d="M0,40 C150,80 350,0 600,40 C850,80 1050,0 1200,40 C1350,80 1550,0 1800,40 C2050,80 2250,0 2400,40 L2400,100 L0,100 Z" transform="translate(0,-8)"/></svg>
+    <svg class="w1" viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="#7fb3ff" d="M0,40 C150,80 350,0 600,40 C850,80 1050,0 1200,40 C1350,80 1550,0 1800,40 C2050,80 2250,0 2400,40 L2400,100 L0,100 Z"/></svg>
+    <svg class="w2" viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="#ffffff" d="M0,40 C150,80 350,0 600,40 C850,80 1050,0 1200,40 C1350,80 1550,0 1800,40 C2050,80 2250,0 2400,40 L2400,100 L0,100 Z" transform="translate(0,10)"/></svg>
   </div>
 </header>
 
@@ -295,7 +391,7 @@
           <span>Ocean Waves</span><span>Applied Oceanography Field Course</span>
         </div>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="teaching"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="teaching"></div></div>
     </div>
 
     <div class="item rev reveal">
@@ -309,7 +405,7 @@
           <li>Processed, quality-controlled, and validated hydrographic survey datasets in accordance with IHO S-44 and national hydrographic survey standards, ensuring data accuracy, consistency, and reliability for final survey outputs.</li>
         </ul>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="hydrographic"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="hydrographic"></div></div>
     </div>
 
     <div class="item reveal" style="margin-top:20px">
@@ -325,7 +421,7 @@
         </ul>
         <div class="chips"><span>MIKE 21</span><span>Excel</span><span>Google Colab</span><span>VS Code</span></div>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="amdal"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="amdal"></div></div>
     </div>
   </div>
 </section>
@@ -337,7 +433,7 @@
     <div class="grid">
 
       <article class="card proj reveal">
-        <div class="gwrap"><div class="gallery" data-g="oilspill"></div></div>
+        <div class="gwrap reveal"><div class="gallery" data-g="oilspill"></div></div>
         <div class="body">
           <span class="badge">Bachelor's Final Project</span>
           <h3>Oil Spill Trajectory Modelling in the ONWJ Block</h3>
@@ -352,7 +448,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="gwrap"><div class="gallery" data-g="rs"></div></div>
+        <div class="gwrap reveal"><div class="gallery" data-g="rs"></div></div>
         <div class="body">
           <h3>Oceanographic Remote Sensing</h3>
           <div class="sub">Satellite image processing &amp; spatial analysis</div>
@@ -365,7 +461,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="gwrap"><div class="gallery" data-g="current"></div></div>
+        <div class="gwrap reveal"><div class="gallery" data-g="current"></div></div>
         <div class="body">
           <h3>Ocean Current Analysis</h3>
           <div class="sub">Ocean current modelling &amp; spatial analysis</div>
@@ -378,7 +474,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="gwrap"><div class="gallery" data-g="tsunami"></div></div>
+        <div class="gwrap reveal"><div class="gallery" data-g="tsunami"></div></div>
         <div class="body">
           <h3>Tsunami Modelling &amp; Inundation Analysis</h3>
           <div class="sub">Propagation &amp; coastal impact</div>
@@ -391,7 +487,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="gwrap"><div class="gallery" data-g="wave"></div></div>
+        <div class="gwrap reveal"><div class="gallery" data-g="wave"></div></div>
         <div class="body">
           <h3>Ocean Wave Forecasting</h3>
           <div class="sub">Wave modelling &amp; statistical analysis</div>
@@ -404,7 +500,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="gwrap"><div class="gallery" data-g="marine"></div></div>
+        <div class="gwrap reveal"><div class="gallery" data-g="marine"></div></div>
         <div class="body">
           <h3>Marine Environmental Modelling</h3>
           <div class="sub">Tidal modelling &amp; hydrodynamic analysis</div>
@@ -417,7 +513,7 @@
       </article>
 
       <article class="card proj reveal">
-        <div class="gwrap"><div class="gallery" data-g="sediment"></div></div>
+        <div class="gwrap reveal"><div class="gallery" data-g="sediment"></div></div>
         <div class="body">
           <h3>Sediment Transport</h3>
           <div class="sub">Coastal morphodynamics &amp; seabed change analysis</div>
@@ -449,7 +545,7 @@
           <li>Implemented sustainability solutions, including a waste incinerator and solar charging station to address local environmental and infrastructure needs.</li>
         </ul>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="sinergi"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="sinergi"></div></div>
     </div>
 
     <div class="item rev reveal">
@@ -462,7 +558,7 @@
           <li>Supported the development of coastal vulnerability maps and delivered disaster mitigation awareness activities to strengthen local understanding of coastal risks and mitigation measures.</li>
         </ul>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="pesisir"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="pesisir"></div></div>
     </div>
   </div>
 </section>
@@ -483,7 +579,7 @@
           <li>Established collaborations with international marine industry professionals and academic institutions, including inviting speakers from international companies.</li>
         </ul>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="imarest"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="imarest"></div></div>
     </div>
 
     <div class="item rev reveal">
@@ -497,7 +593,7 @@
           <li>Coordinated cross-community and institutional engagement to strengthen student representation and communication with ITB's institutional governance.</li>
         </ul>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="mwa"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="mwa"></div></div>
     </div>
 
     <div class="item reveal">
@@ -511,7 +607,7 @@
           <li>Managed strategic partnerships with industry professionals, student organizations, and external stakeholders.</li>
         </ul>
       </div>
-      <div class="gwrap"><div class="gallery" data-g="tec"></div></div>
+      <div class="gwrap reveal"><div class="gallery" data-g="tec"></div></div>
     </div>
   </div>
 </section>
@@ -627,6 +723,32 @@
   document.addEventListener('contextmenu', e => { if (e.target.closest('img, .gallery, #lb, .photo')) e.preventDefault(); });
   document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
   document.querySelectorAll('img').forEach(i => i.setAttribute('draggable', 'false'));
+
+  // ===== Animations =====
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // scroll progress
+  const bar = document.getElementById('progress');
+  const onScroll = () => { const h = document.documentElement; bar.style.transform = `scaleX(${h.scrollTop / (h.scrollHeight - h.clientHeight || 1)})`; };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  // stagger: sibling .reveal blocks, chips and gallery thumbs
+  document.querySelectorAll('.grid, .about, .stack').forEach(p => [...p.children].filter(c => c.classList.contains('reveal')).forEach((c, i) => c.style.setProperty('--d', (i % 3) * 0.1 + 's')));
+  document.querySelectorAll('.chips').forEach(c => [...c.children].forEach((s, i) => s.style.transitionDelay = (0.25 + i * 0.04) + 's'));
+  document.querySelectorAll('.gallery').forEach(g => [...g.children].forEach((t, i) => t.style.transitionDelay = (0.2 + i * 0.08) + 's'));
+  // active nav link
+  const links = [...document.querySelectorAll('.links a')];
+  const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
+  if (!reduce) {
+    // bubbles in hero
+    const bb = document.querySelector('.bubbles');
+    for (let i = 0; i < 14; i++) { const b = document.createElement('b'); const z = 6 + Math.random() * 14;
+      Object.assign(b.style, { left: Math.random() * 100 + '%', width: z + 'px', height: z + 'px', animationDuration: 8 + Math.random() * 10 + 's', animationDelay: Math.random() * 10 + 's' }); bb.appendChild(b); }
+    // 3D tilt on profile photo
+    const ph = document.querySelector('.photo'), tl = ph.querySelector('.tilt');
+    ph.addEventListener('mousemove', e => { const r = ph.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      tl.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg)`; });
+    ph.addEventListener('mouseleave', () => tl.style.transform = '');
+  }
 
   // Animasi muncul saat discroll
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
