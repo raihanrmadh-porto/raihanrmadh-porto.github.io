@@ -528,10 +528,10 @@
 <footer>© <span id="yr"></span> Raihan Ramadhan · Chasing horizons, exploring depths.</footer>
 
 <div id="lb" role="dialog" aria-modal="true">
-  <button class="close" aria-label="Tutup">✕</button>
-  <button class="prev" aria-label="Sebelumnya">‹</button>
+  <button class="close" aria-label="Close">✕</button>
+  <button class="prev" aria-label="Previous">‹</button>
   <div class="stage"><img alt=""></div>
-  <button class="next" aria-label="Berikutnya">›</button>
+  <button class="next" aria-label="Next">›</button>
   <div class="cap"></div>
   <div class="dots"></div>
 </div>
@@ -572,14 +572,14 @@
     caps.slice(0, MAX_THUMBS).forEach((c, i) => {
       const b = document.createElement('button');
       b.className = 'th' + (FIGS.includes(g) ? ' fig' : '');
-      b.setAttribute('aria-label', 'Lihat foto: ' + c);
+      b.setAttribute('aria-label', 'View photo: ' + c);
       b.innerHTML = `<img src="${src(g, i)}" alt="${c}" loading="lazy">`;
       if (i === MAX_THUMBS - 1 && caps.length > MAX_THUMBS) b.innerHTML += `<span class="more">+${caps.length - MAX_THUMBS + 1}</span>`;
       b.onclick = () => open(g, i, title);
       el.appendChild(b);
     });
     const hint = document.createElement('div'); hint.className = 'gallery-hint';
-    hint.textContent = `📷 ${caps.length} dokumentasi · klik untuk melihat`;
+    hint.textContent = `📷 ${caps.length} ${caps.length > 1 ? 'photos' : 'photo'} · click to view`;
     el.after(hint);
   });
 
