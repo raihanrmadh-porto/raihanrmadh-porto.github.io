@@ -237,9 +237,26 @@
   .gallery .th:hover{box-shadow:0 12px 30px rgba(5,10,30,.5)}
   .cgrid a{transition:transform .35s var(--ease),border-color .3s}
 
+
+  /* LOGOS */
+  .org-head{display:flex;align-items:center;gap:14px;margin-bottom:2px}
+  .org-head>div{min-width:0}
+  .org-logo{width:52px;height:52px;flex:none;object-fit:contain;border-radius:12px;background:#fff;padding:5px;box-shadow:0 4px 14px rgba(5,10,30,.25)}
+  .edu .org-head h3{margin:0}
+  .sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:10px}
+  .sw{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);text-align:center;transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .2s}
+  .sw img{width:38px;height:38px;object-fit:contain}
+  .sw span{font-size:.7rem;line-height:1.2;color:var(--muted)}
+  .sw:hover{transform:translateY(-4px) scale(1.06);background:rgba(255,255,255,.12)}
+  .sw{opacity:0}
+  .in .sw{animation:swin .6s cubic-bezier(.34,1.56,.64,1) forwards;animation-delay:var(--sd,0s)}
+  @keyframes swin{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+  .chips span.ic{display:inline-flex;align-items:center;gap:6px}
+  .chips span.ic img{width:16px;height:16px;object-fit:contain}
+
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
-    .hero .anim,.roles span,.photo,.gallery .th,.chips span,ul.clean li,.courses span,[data-a],.seq-h>*,.sec-head *,.hero h1.name .ln>span{opacity:1!important;transform:none!important}
+    .hero .anim,.roles span,.photo,.gallery .th,.chips span,ul.clean li,.courses span,[data-a],.seq-h>*,.sec-head *,.hero h1.name .ln>span,.sw{opacity:1!important;transform:none!important}
     .sec-head .line{transform:none}
   }
 
@@ -320,7 +337,7 @@
         </div>
         <div class="card edu reveal">
           <span class="serif">Education</span>
-          <h3>Institut Teknologi Bandung</h3>
+          <div class="org-head"><img class="org-logo" src="images/logos/itb.png" alt=""><h3>Institut Teknologi Bandung</h3></div>
           <div class="meta">Bachelor's degree in Oceanography · GPA 3.34/4.00 · 152 credits</div>
           <p style="color:var(--muted);font-size:.92rem;margin-bottom:10px">Relevant academic areas:</p>
           <div class="chips">
@@ -340,12 +357,7 @@
         </div>
         <div class="card reveal">
           <span class="serif">Software</span>
-          <div class="chips">
-            <span>ArcGIS</span><span>QGIS</span><span>ESA SNAP</span><span>SeaDAS</span><span>SAGA GIS</span><span>Google Earth Engine</span>
-            <span>Python</span><span>MATLAB</span><span>Fortran</span><span>Google Colab</span><span>VS Code</span><span>Ubuntu</span>
-            <span>MIKE 21</span><span>Delft3D</span><span>SWAN</span><span>XBeach</span><span>COMCOT</span><span>Global Mapper</span>
-            <span>Ocean Data View</span><span>WRPLOT View</span><span>AutoCAD</span><span>Excel</span>
-          </div>
+          <div class="sw-grid"><div class="sw" title="ArcGIS"><img src="images/logos/arcgis-pro.png" alt="ArcGIS" loading="lazy"><span>ArcGIS</span></div><div class="sw" title="QGIS"><img src="images/logos/qgis.png" alt="QGIS" loading="lazy"><span>QGIS</span></div><div class="sw" title="ESA SNAP"><img src="images/logos/snap.png" alt="ESA SNAP" loading="lazy"><span>ESA SNAP</span></div><div class="sw" title="SeaDAS"><img src="images/logos/seadas.png" alt="SeaDAS" loading="lazy"><span>SeaDAS</span></div><div class="sw" title="SAGA GIS"><img src="images/logos/saga-gis.png" alt="SAGA GIS" loading="lazy"><span>SAGA GIS</span></div><div class="sw" title="Google Earth Engine"><img src="images/logos/google-earth-engine.png" alt="Google Earth Engine" loading="lazy"><span>Google Earth Engine</span></div><div class="sw" title="Python"><img src="images/logos/python.png" alt="Python" loading="lazy"><span>Python</span></div><div class="sw" title="MATLAB"><img src="images/logos/matlab.png" alt="MATLAB" loading="lazy"><span>MATLAB</span></div><div class="sw" title="Fortran"><img src="images/logos/fortran.png" alt="Fortran" loading="lazy"><span>Fortran</span></div><div class="sw" title="Google Colab"><img src="images/logos/googlecolab.png" alt="Google Colab" loading="lazy"><span>Google Colab</span></div><div class="sw" title="VS Code"><img src="images/logos/vscode.png" alt="VS Code" loading="lazy"><span>VS Code</span></div><div class="sw" title="Ubuntu"><img src="images/logos/linux-ubuntu.png" alt="Ubuntu" loading="lazy"><span>Ubuntu</span></div><div class="sw" title="MIKE 21"><img src="images/logos/mike21.png" alt="MIKE 21" loading="lazy"><span>MIKE 21</span></div><div class="sw" title="Delft3D"><img src="images/logos/delft3d.png" alt="Delft3D" loading="lazy"><span>Delft3D</span></div><div class="sw" title="SWAN"><img src="images/logos/swan.png" alt="SWAN" loading="lazy"><span>SWAN</span></div><div class="sw" title="XBeach"><img src="images/logos/xbeach.png" alt="XBeach" loading="lazy"><span>XBeach</span></div><div class="sw" title="COMCOT"><img src="images/logos/comcot.png" alt="COMCOT" loading="lazy"><span>COMCOT</span></div><div class="sw" title="Global Mapper"><img src="images/logos/globalmapper.png" alt="Global Mapper" loading="lazy"><span>Global Mapper</span></div><div class="sw" title="Ocean Data View"><img src="images/logos/ocean-data-view.png" alt="Ocean Data View" loading="lazy"><span>Ocean Data View</span></div><div class="sw" title="WRPLOT View"><img src="images/logos/wrplot-view.png" alt="WRPLOT View" loading="lazy"><span>WRPLOT View</span></div><div class="sw" title="AutoCAD"><img src="images/logos/autocad.png" alt="AutoCAD" loading="lazy"><span>AutoCAD</span></div><div class="sw" title="Excel"><img src="images/logos/excel.png" alt="Excel" loading="lazy"><span>Excel</span></div></div>
         </div>
       </div>
     </div>
@@ -359,8 +371,8 @@
 
     <div class="item reveal">
       <div class="card">
-        <h3>Teaching, Laboratory &amp; Field Assistant</h3>
-        <div class="org">Institut Teknologi Bandung</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/itb.png" alt=""><div><h3>Teaching, Laboratory &amp; Field Assistant</h3>
+        <div class="org">Institut Teknologi Bandung</div></div></div>
         <div class="when">2024 – 2026</div>
         <ul class="clean">
           <li>Delivered teaching, laboratory, and mentoring sessions across 8 undergraduate Oceanography and Earth Sciences courses, supporting classes of 60–100+ students across theoretical, computational, and field-based learning.</li>
@@ -380,8 +392,8 @@
 
     <div class="item rev reveal">
       <div class="card">
-        <h3>Hydrographic Surveyor Intern</h3>
-        <div class="org">Distrik Navigasi Kelas I Tipe B Tanjung Priok</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/distrik-navigasi.png" alt=""><div><h3>Hydrographic Surveyor Intern</h3>
+        <div class="org">Distrik Navigasi Kelas I Tipe B Tanjung Priok</div></div></div>
         <div class="when">Jakarta · Aug 2025 – Sep 2025</div>
         <ul class="clean">
           <li>Conducted hydrographic and oceanographic surveys in Bojonegara Waters, Banten, supporting bathymetric mapping and navigational safety through MBES, SBES, SSS, RTK GNSS, SVP, Magnetometer, LiDAR, and TideMaster.</li>
@@ -395,15 +407,15 @@
     <div class="item reveal" style="margin-top:20px">
       <div class="card">
         <span class="badge">Professional Project</span>
-        <h3>Hydrodynamic Modelling Assistant</h3>
-        <div class="org">Environmental Impact Assessment (AMDAL) Project — Client: Ministry of Marine Affairs and Fisheries (KKP)</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/kkp.png" alt=""><div><h3>Hydrodynamic Modelling Assistant</h3>
+        <div class="org">Environmental Impact Assessment (AMDAL) Project — Client: Ministry of Marine Affairs and Fisheries (KKP)</div></div></div>
         <div class="when">Institut Teknologi Bandung · Jan 2026 – Jul 2026</div>
         <ul class="clean">
           <li>Developed MIKE 21 hydrodynamic simulations to assess oceanographic conditions and support AMDAL studies across Bekasi, Karawang, and Indramayu.</li>
           <li>Processed and analyzed oceanographic and environmental datasets for model setup, calibration, validation, and interpretation of hydrodynamic conditions.</li>
           <li>Generated and interpreted hydrodynamic simulation outputs, contributing technical analyses, figures, and documentation to support the preparation of AMDAL reports.</li>
         </ul>
-        <div class="chips"><span>MIKE 21</span><span>Excel</span><span>Google Colab</span><span>VS Code</span></div>
+        <div class="chips"><span class="ic"><img src="images/logos/mike21.png" alt="" loading="lazy">MIKE 21</span><span class="ic"><img src="images/logos/excel.png" alt="" loading="lazy">Excel</span><span class="ic"><img src="images/logos/googlecolab.png" alt="" loading="lazy">Google Colab</span><span class="ic"><img src="images/logos/vscode.png" alt="" loading="lazy">VS Code</span></div>
       </div>
       <div class="gwrap reveal"><div class="gallery" data-g="amdal"></div></div>
     </div>
@@ -427,7 +439,7 @@
             <li>Simulated oil transport and weathering across multiple hydrodynamic scenarios, and validated outputs against Sentinel-1 SAR observations using spatial comparison metrics.</li>
             <li>Processed and visualized datasets using Python, MATLAB, NetCDF, QGIS, and ESA SNAP.</li>
           </ul>
-          <div class="chips"><span>Python</span><span>OceanParcels</span><span>MITgcm</span><span>QGIS</span><span>ESA SNAP</span><span>Ubuntu</span></div>
+          <div class="chips"><span class="ic"><img src="images/logos/python.png" alt="" loading="lazy">Python</span><span>OceanParcels</span><span>MITgcm</span><span class="ic"><img src="images/logos/qgis.png" alt="" loading="lazy">QGIS</span><span class="ic"><img src="images/logos/snap.png" alt="" loading="lazy">ESA SNAP</span><span class="ic"><img src="images/logos/linux-ubuntu.png" alt="" loading="lazy">Ubuntu</span></div>
         </div>
       </article>
 
@@ -440,7 +452,7 @@
             <li>Analyzed sea surface temperature, thermal fronts, and chlorophyll-a distribution using SeaDAS, ArcGIS, SAGA GIS, and Google Earth Engine.</li>
             <li>Processed Landsat 7/8 imagery for shoreline extraction, predictive coral reef mapping, and oil spill monitoring using ESA SNAP, QGIS, and ArcGIS.</li>
           </ul>
-          <div class="chips"><span>ArcGIS</span><span>QGIS</span><span>ESA SNAP</span><span>SeaDAS</span><span>SAGA GIS</span><span>GEE</span></div>
+          <div class="chips"><span class="ic"><img src="images/logos/arcgis-pro.png" alt="" loading="lazy">ArcGIS</span><span class="ic"><img src="images/logos/qgis.png" alt="" loading="lazy">QGIS</span><span class="ic"><img src="images/logos/snap.png" alt="" loading="lazy">ESA SNAP</span><span class="ic"><img src="images/logos/seadas.png" alt="" loading="lazy">SeaDAS</span><span class="ic"><img src="images/logos/saga-gis.png" alt="" loading="lazy">SAGA GIS</span><span class="ic"><img src="images/logos/google-earth-engine.png" alt="" loading="lazy">GEE</span></div>
         </div>
       </article>
 
@@ -453,7 +465,7 @@
             <li>Analyzed bathymetric topography, absolute dynamic topography, and spatial current velocity using ODV, Python, and MATLAB to characterize circulation patterns.</li>
             <li>Developed current rose diagrams and Ekman transport models, and visualized current velocity and current-induced salinity distribution.</li>
           </ul>
-          <div class="chips"><span>ODV</span><span>Python</span><span>MATLAB</span><span>WRPLOT</span><span>Excel</span></div>
+          <div class="chips"><span class="ic"><img src="images/logos/ocean-data-view.png" alt="" loading="lazy">ODV</span><span class="ic"><img src="images/logos/python.png" alt="" loading="lazy">Python</span><span class="ic"><img src="images/logos/matlab.png" alt="" loading="lazy">MATLAB</span><span class="ic"><img src="images/logos/wrplot-view.png" alt="" loading="lazy">WRPLOT</span><span class="ic"><img src="images/logos/excel.png" alt="" loading="lazy">Excel</span></div>
         </div>
       </article>
 
@@ -466,7 +478,7 @@
             <li>Simulated tsunami propagation using COMCOT, incorporating bathymetric and topographic datasets from BATNAS and DEMNAS.</li>
             <li>Processed and visualized inundation data using Global Mapper, Python, and MATLAB to assess potential inundation extent in coastal areas.</li>
           </ul>
-          <div class="chips"><span>COMCOT</span><span>Global Mapper</span><span>MATLAB</span></div>
+          <div class="chips"><span class="ic"><img src="images/logos/comcot.png" alt="" loading="lazy">COMCOT</span><span class="ic"><img src="images/logos/globalmapper.png" alt="" loading="lazy">Global Mapper</span><span class="ic"><img src="images/logos/matlab.png" alt="" loading="lazy">MATLAB</span></div>
         </div>
       </article>
 
@@ -479,7 +491,7 @@
             <li>Modelled ocean wave conditions using SWAN to analyze wave height, period, and spatial distribution under varying environmental conditions.</li>
             <li>Conducted Extreme Value Analysis (EVA) using Python to estimate extreme wave conditions for coastal and marine applications.</li>
           </ul>
-          <div class="chips"><span>SWAN</span><span>Python</span><span>Google Colab</span></div>
+          <div class="chips"><span class="ic"><img src="images/logos/swan.png" alt="" loading="lazy">SWAN</span><span class="ic"><img src="images/logos/python.png" alt="" loading="lazy">Python</span><span class="ic"><img src="images/logos/googlecolab.png" alt="" loading="lazy">Google Colab</span></div>
         </div>
       </article>
 
@@ -492,7 +504,7 @@
             <li>Simulated tidal elevation and hydrodynamic conditions using Delft3D to analyze tidal patterns and current circulation in coastal waters.</li>
             <li>Developed current rose diagrams and verified model outputs against observational data to evaluate model performance.</li>
           </ul>
-          <div class="chips"><span>Delft3D</span><span>MATLAB</span><span>QGIS</span><span>Excel</span></div>
+          <div class="chips"><span class="ic"><img src="images/logos/delft3d.png" alt="" loading="lazy">Delft3D</span><span class="ic"><img src="images/logos/matlab.png" alt="" loading="lazy">MATLAB</span><span class="ic"><img src="images/logos/qgis.png" alt="" loading="lazy">QGIS</span><span class="ic"><img src="images/logos/excel.png" alt="" loading="lazy">Excel</span></div>
         </div>
       </article>
 
@@ -505,7 +517,7 @@
             <li>Simulated sediment transport and coastal morphodynamics using XBeach under JONSWAP and WAVESP2 wave conditions.</li>
             <li>Compared seabed elevation changes between scenarios to assess the influence of wave conditions on coastal morphology.</li>
           </ul>
-          <div class="chips"><span>XBeach</span><span>Google Colab</span></div>
+          <div class="chips"><span class="ic"><img src="images/logos/xbeach.png" alt="" loading="lazy">XBeach</span><span class="ic"><img src="images/logos/googlecolab.png" alt="" loading="lazy">Google Colab</span></div>
         </div>
       </article>
 
@@ -520,8 +532,8 @@
 
     <div class="item reveal">
       <div class="card">
-        <h3>Community Service Project / Operational Team</h3>
-        <div class="org">DRPM ITB “Sinergi Tunda”</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/itb.png" alt=""><div><h3>Community Service Project / Operational Team</h3>
+        <div class="org">DRPM ITB “Sinergi Tunda”</div></div></div>
         <div class="when">Pulau Tunda, Banten · Jul 2025 – Aug 2025</div>
         <ul class="clean">
           <li>Engaged local communities in coastal waste management and sustainable tourism initiatives, promoting environmental awareness and responsible tourism practices.</li>
@@ -534,8 +546,8 @@
 
     <div class="item rev reveal">
       <div class="card">
-        <h3>Community Service Project / Operational Team</h3>
-        <div class="org">Peduli Pesisir</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/peduli-pesisir-itb.png" alt=""><div><h3>Community Service Project / Operational Team</h3>
+        <div class="org">Peduli Pesisir</div></div></div>
         <div class="when">Desa Cemarajaya, Karawang · Jul 2024 – Aug 2024</div>
         <ul class="clean">
           <li>Coordinated field logistics, resources, and team activities for a community service project addressing coastal erosion and tidal flooding, including the implementation of a wooden breakwater as part of a hybrid engineering approach.</li>
@@ -554,8 +566,8 @@
 
     <div class="item reveal">
       <div class="card">
-        <h3>President</h3>
-        <div class="org">Institute of Marine Engineering, Science, and Technology (IMarEST) ITB Student Section</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/imarest-itb.png" alt=""><div><h3>President</h3>
+        <div class="org">Institute of Marine Engineering, Science, and Technology (IMarEST) ITB Student Section</div></div></div>
         <div class="when">Institut Teknologi Bandung · Aug 2025 – Aug 2026</div>
         <ul class="clean">
           <li>Initiated and established the first IMarEST Student Section at ITB, building the organization from inception and leading a team of 46 officers.</li>
@@ -568,8 +580,8 @@
 
     <div class="item rev reveal">
       <div class="card">
-        <h3>Head of Strategic Relation</h3>
-        <div class="org">Majelis Wali Amanat – Wakil Mahasiswa (MWA-WM) ITB</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/mwa-wm-itb.png" alt=""><div><h3>Head of Strategic Relation</h3>
+        <div class="org">Majelis Wali Amanat – Wakil Mahasiswa (MWA-WM) ITB</div></div></div>
         <div class="when">Institut Teknologi Bandung · 2024 – 2026</div>
         <ul class="clean">
           <li>Led the Strategic Relations function overseeing five divisions: Ganesha, Jatinangor, Cirebon, Postgraduate, and TPB (First-Year Student) Relations.</li>
@@ -582,8 +594,8 @@
 
     <div class="item reveal">
       <div class="card">
-        <h3>President</h3>
-        <div class="org">Techno Entrepreneur Club (TEC) ITB</div>
+        <div class="org-head"><img class="org-logo" src="images/logos/tec-itb.png" alt=""><div><h3>President</h3>
+        <div class="org">Techno Entrepreneur Club (TEC) ITB</div></div></div>
         <div class="when">Institut Teknologi Bandung · Aug 2024 – Aug 2025</div>
         <ul class="clean">
           <li>Led organizational strategy with 58 associates and 300+ active members across four cohorts, coordinating cross-functional teams.</li>
@@ -735,6 +747,7 @@
   // stagger bullets, chips, courses, thumbnails
   document.querySelectorAll('ul.clean').forEach(u => [...u.children].forEach((li, i) => li.style.transitionDelay = (.35 + i * .09) + 's'));
   document.querySelectorAll('.chips').forEach(c => [...c.children].forEach((s, i) => s.style.transitionDelay = (.3 + i * .035) + 's'));
+  document.querySelectorAll('.sw-grid').forEach(g => [...g.children].forEach((t, i) => t.style.setProperty('--sd', (.2 + i * .04) + 's')));
   document.querySelectorAll('.courses').forEach(c => [...c.children].forEach((s, i) => s.style.transitionDelay = (.5 + i * .05) + 's'));
   document.querySelectorAll('.gallery').forEach(g => [...g.children].forEach((t, i) => t.style.transitionDelay = (.25 + i * .08) + 's'));
 
