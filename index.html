@@ -17,7 +17,7 @@
 <meta name="twitter:image" content="https://raihanrmadh-porto.github.io/images/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&family=Playfair+Display:ital,wght@1,600;1,700;1,800&display=swap" rel="stylesheet">
 <style>
   :root{
     --g1:#111d3d; --g2:#2f3d63; --g3:#56648a;
@@ -254,7 +254,52 @@
   .chips span.ic{display:inline-flex;align-items:center;gap:6px}
   .chips span.ic img{width:16px;height:16px;object-fit:contain}
 
+
+  /* ===== v5: pill nav, editorial titles, waves, bathymetry background ===== */
+  .pill-nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:60;max-width:calc(100vw - 20px)}
+  .pill{position:relative;display:flex;gap:2px;padding:5px;border-radius:999px;background:rgba(17,29,61,.55);border:1px solid rgba(255,255,255,.14);
+    -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);box-shadow:0 10px 30px rgba(5,10,30,.35);overflow-x:auto;scrollbar-width:none}
+  .pill::-webkit-scrollbar{display:none}
+  .pill a{position:relative;z-index:1;padding:9px 16px;border-radius:999px;font-size:.9rem;font-weight:600;color:rgba(238,241,250,.55);text-decoration:none;white-space:nowrap;transition:color .3s}
+  .pill a:hover{color:rgba(238,241,250,.85)}
+  .pill a.active{color:#fff}
+  .pill .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.12);
+    transition:transform .55s cubic-bezier(.34,1.3,.64,1),width .55s cubic-bezier(.34,1.3,.64,1);z-index:0}
+  .hero{padding-top:120px}
+  section{scroll-margin-top:80px}
+  /* editorial titles: sans + serif italic with silver gradient */
+  .hero h1.name{font-family:Inter,sans-serif;font-weight:500;letter-spacing:-.035em;font-size:clamp(3rem,7.5vw,5.4rem);line-height:.98}
+  .hero h1.name .it,.sec-head h2 em,.contact h2 em{font-family:"Playfair Display",serif;font-style:italic;font-weight:800;letter-spacing:-.02em;
+    background:linear-gradient(180deg,#ffffff 15%,#9aa6c4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+  .sec-head h2{font-family:Inter,sans-serif;font-weight:500;letter-spacing:-.03em;font-size:clamp(1.9rem,3.6vw,2.7rem)}
+  .contact h2{font-family:Inter,sans-serif;font-weight:500;letter-spacing:-.035em;font-size:clamp(2.2rem,5.5vw,3.8rem);line-height:1.05}
+  .contact h2 em{font-size:1.08em}
+  /* bathymetry contour background */
+  .bg-map{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .bg-map .contours{position:absolute;inset:-10%;background:url(images/contours.svg) center/cover no-repeat;opacity:.07;animation:cdrift 60s ease-in-out infinite alternate}
+  .bg-map .grid{position:absolute;inset:0;opacity:.05;
+    background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);background-size:120px 120px;
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)}
+  @keyframes cdrift{to{transform:translate(-3%,2%) scale(1.04)}}
+  /* waves */
+  .waves{position:absolute;left:0;right:0;bottom:-1px;height:110px;pointer-events:none;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent);mask-image:linear-gradient(180deg,#000 40%,transparent)}
+  .waves svg{position:absolute;bottom:0;width:200%;height:100%}
+  .waves path{fill:#ffffff}
+  .waves .w1{opacity:.07;animation:wave 16s linear infinite}
+  .waves .w2{opacity:.05;height:85%;animation:wave 11s linear infinite reverse}
+  .waves .w3{opacity:.04;height:115%;animation:wave 24s linear infinite}
+  @keyframes wave{to{transform:translateX(-50%)}}
+  .waves.foot{position:relative;height:90px;margin-top:-30px}
+  /* re-playable reveals: smooth out when leaving */
+  [data-a],.sec-head *, ul.clean li,.chips span,.gallery .th,.seq-h>*{backface-visibility:hidden}
+  @media (max-width:860px){
+    .pill-nav{top:10px}
+    .pill a{padding:8px 12px;font-size:.82rem}
+    .hero{padding-top:96px}
+  }
+
   @media (prefers-reduced-motion: reduce){
+    .waves svg,.bg-map .contours{animation:none!important}
     *,*::before,*::after{animation:none!important;transition:none!important}
     .hero .anim,.roles span,.photo,.gallery .th,.chips span,ul.clean li,.courses span,[data-a],.seq-h>*,.sec-head *,.hero h1.name .ln>span,.sw{opacity:1!important;transform:none!important}
     .sec-head .line{transform:none}
@@ -277,10 +322,6 @@
     .item.rev .gwrap{order:0}
     .photo{order:-1}
     .photo img{width:220px}
-    .links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:rgba(17,29,61,.85);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
-    .links.open{display:flex}
-    .links a{display:block;padding:14px 24px}
-    .burger{display:block}
     .cgrid{grid-template-columns:1fr}
     section{padding:60px 0}
   }
@@ -288,19 +329,18 @@
 </head>
 <body>
 <div id="progress"></div>
+<div class="bg-map" aria-hidden="true"><div class="contours"></div><div class="grid"></div></div>
 
-<nav>
-  <div class="wrap">
-    <a href="#top" class="logo">Raihan<span>.</span></a>
-    <button class="burger" aria-label="Menu" onclick="document.querySelector('.links').classList.toggle('open')">☰</button>
-    <ul class="links" onclick="this.classList.remove('open')">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#community">Community</a></li>
-      <li><a href="#leadership">Leadership</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+<nav class="pill-nav" aria-label="Main">
+  <div class="pill">
+    <span class="ind" aria-hidden="true"></span>
+    <a href="#top" data-s="top">Home</a>
+    <a href="#about" data-s="about">About</a>
+    <a href="#experience" data-s="experience">Experience</a>
+    <a href="#projects" data-s="projects">Projects</a>
+    <a href="#community" data-s="community">Community</a>
+    <a href="#leadership" data-s="leadership">Leadership</a>
+    <a href="#contact" data-s="contact">Contact</a>
   </div>
 </nav>
 
@@ -309,7 +349,7 @@
   <div class="wrap">
     <div>
       <div class="eyebrow anim" style="--i:0">Portfolio · Oceanography ITB</div>
-      <h1 class="name"><span class="ln"><span style="--i:1">Raihan</span></span><span class="ln"><span style="--i:2">Ramadhan</span></span></h1>
+      <h1 class="name"><span class="ln"><span style="--i:1">Raihan</span></span><span class="ln"><span style="--i:2" class="it">Ramadhan.</span></span></h1>
       <div class="roles">
         <span style="--i:0">GIS Analyst</span><span style="--i:1">Ocean Modeller</span><span style="--i:2">Marine Surveyor</span><span style="--i:3">Coastal Engineer</span>
       </div>
@@ -323,12 +363,17 @@
     </div>
     <div class="photo"><div class="tilt"><div class="float"><img src="images/profile.jpg" alt="Raihan Ramadhan"></div></div></div>
   </div>
+  <div class="waves" aria-hidden="true">
+    <svg class="w3" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+    <svg class="w2" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+    <svg class="w1" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+  </div>
 </header>
 
 <!-- ============ ABOUT ============ -->
 <section id="about">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="num">01</span><h2><span class="t">About</span></h2><span class="line"></span></div>
+    <div class="sec-head reveal"><span class="num">01</span><h2><span class="t">About <em>me.</em></span></h2><span class="line"></span></div>
     <div class="about">
       <div class="stack">
         <div class="card reveal">
@@ -367,7 +412,7 @@
 <!-- ============ EXPERIENCE ============ -->
 <section id="experience">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="num">02</span><h2><span class="t">Experience</span></h2><span class="line"></span></div>
+    <div class="sec-head reveal"><span class="num">02</span><h2><span class="t">Work <em>experience.</em></span></h2><span class="line"></span></div>
 
     <div class="item reveal">
       <div class="card">
@@ -425,7 +470,7 @@
 <!-- ============ ACADEMIC PROJECTS ============ -->
 <section id="projects">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="num">03</span><h2><span class="t">Academic Projects</span></h2><span class="line"></span></div>
+    <div class="sec-head reveal"><span class="num">03</span><h2><span class="t">Academic <em>projects.</em></span></h2><span class="line"></span></div>
     <div class="grid">
 
       <article class="card proj reveal">
@@ -528,7 +573,7 @@
 <!-- ============ COMMUNITY ============ -->
 <section id="community">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="num">04</span><h2><span class="t">Community Projects</span></h2><span class="line"></span></div>
+    <div class="sec-head reveal"><span class="num">04</span><h2><span class="t">Community <em>projects.</em></span></h2><span class="line"></span></div>
 
     <div class="item reveal">
       <div class="card">
@@ -562,7 +607,7 @@
 <!-- ============ LEADERSHIP ============ -->
 <section id="leadership">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="num">05</span><h2><span class="t">Leadership</span></h2><span class="line"></span></div>
+    <div class="sec-head reveal"><span class="num">05</span><h2><span class="t">Leadership <em>roles.</em></span></h2><span class="line"></span></div>
 
     <div class="item reveal">
       <div class="card">
@@ -611,7 +656,7 @@
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="contact">
   <div class="wrap reveal">
-    <h2>Beyond this page,<br>let's connect.</h2>
+    <h2>Beyond this page,<br><em>let's connect.</em></h2>
     <p>Open to new opportunities, meaningful collaborations, and conversations that lead to new possibilities.</p>
     <div class="cgrid">
       <a class="card" href="mailto:raihanrmadhn@gmail.com">
@@ -630,6 +675,11 @@
   </div>
 </section>
 
+<div class="waves foot" aria-hidden="true">
+    <svg class="w3" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+    <svg class="w2" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+    <svg class="w1" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+  </div>
 <footer>© <span id="yr"></span> Raihan Ramadhan · Chasing horizons, exploring depths.</footer>
 
 <div id="lb" role="dialog" aria-modal="true">
@@ -751,10 +801,22 @@
   document.querySelectorAll('.courses').forEach(c => [...c.children].forEach((s, i) => s.style.transitionDelay = (.5 + i * .05) + 's'));
   document.querySelectorAll('.gallery').forEach(g => [...g.children].forEach((t, i) => t.style.transitionDelay = (.25 + i * .08) + 's'));
 
-  // active nav link
-  const links = [...document.querySelectorAll('.links a')];
-  const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-45% 0px -50% 0px' });
-  document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
+  // pill nav: sliding indicator follows the active section
+  const pill = document.querySelector('.pill'), ind = pill.querySelector('.ind'), navA = [...pill.querySelectorAll('a')];
+  function moveInd(a) {
+    navA.forEach(x => x.classList.toggle('active', x === a));
+    ind.style.width = a.offsetWidth + 'px'; ind.style.transform = `translateX(${a.offsetLeft}px)`;
+    const l = a.offsetLeft - pill.clientWidth / 2 + a.offsetWidth / 2; pill.scrollTo({ left: l, behavior: 'smooth' });
+  }
+  const secs = navA.map(a => document.getElementById(a.dataset.s)).filter(Boolean);
+  function spy() {
+    const y = innerHeight * .4; let cur = secs[0];
+    secs.forEach(sec => { if (sec.getBoundingClientRect().top <= y) cur = sec; });
+    const a = navA.find(x => x.dataset.s === cur.id); if (a && !a.classList.contains('active')) moveInd(a);
+  }
+  addEventListener('scroll', spy, { passive: true }); addEventListener('resize', () => { const a = pill.querySelector('a.active'); a && moveInd(a); });
+  document.fonts && document.fonts.ready.then(spy); spy();
+
   if (!reduce) {
     // 3D tilt on profile photo
     const ph = document.querySelector('.photo'), tl = ph.querySelector('.tilt');
@@ -764,7 +826,10 @@
   }
 
   // Animasi muncul saat discroll
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('in');
+    else if (!reduce) e.target.classList.remove('in');
+  }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, [data-a]').forEach(el => io.observe(el));
 </script>
 </body>
