@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>(function(){try{if(sessionStorage.getItem('rr_unlocked')||location.hash||/[?&]lock=0/.test(location.search))return}catch(e){}document.documentElement.classList.add('locked')})()</script>
+<noscript><style>#lock{display:none!important}</style></noscript>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Raihan Ramadhan — GIS Analyst · Ocean Modeller · Marine Surveyor</title>
@@ -508,9 +511,140 @@
     box-shadow:0 14px 28px rgba(5,10,30,.45),0 34px 70px rgba(5,10,30,.4)}
   @media (max-width:860px){.photo img{width:230px}}
 
+
+  /* sub-heading in the same editorial style as the section titles */
+  .sec-head.sub{margin:56px 0 28px}
+  .sec-head.sub h2{font-size:clamp(1.55rem,2.8vw,2.1rem)}
+
+  /* ===== lock screen (5 ways to unlock) ===== */
+  html.locked,html.locked body{overflow:hidden;height:100%}
+  html.locked .hero *,html.locked .scene *,html.locked .photo,html.locked .photo *,html.locked .pill-nav,html.locked #shark{animation-play-state:paused!important}
+  #lock{position:fixed;inset:0;z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;color:#fff;
+    padding:max(46px,6vh) 22px max(26px,4vh);overflow:hidden;background:linear-gradient(90deg,#111d3d 0%,#2f3d63 50%,#56648a 100%);
+    transition:transform 1s cubic-bezier(.7,0,.2,1),opacity .9s ease .1s,filter .9s ease}
+  html.locked #lock,#lock.out{display:flex}
+  #lock.out{transform:translateY(-100%);opacity:0;filter:blur(10px);pointer-events:none}
+  #lock>*{position:relative;z-index:1}
+  #lock>.lk-contours,#lock>.lk-deep,#lock>.lk-water,#lock>.waves{position:absolute;z-index:0}
+  #lock .lk-contours{inset:-10%;background:url(images/contours.svg) center/cover no-repeat;opacity:.09;pointer-events:none;animation:cdrift 60s ease-in-out infinite alternate}
+  #lock .lk-deep{inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(3,8,24,.55),rgba(2,5,16,.97));opacity:var(--d,0)}
+  #lock .lk-water{left:0;right:0;bottom:0;pointer-events:none;height:calc(var(--t,0) * 125%);background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.1))}
+  #lock .lk-water::before{content:"";position:absolute;left:0;right:0;top:-23px;height:24px;background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' viewBox='0 0 120 24'%3E%3Cpath d='M0 12Q30 0 60 12T120 12V24H0Z' fill='white' fill-opacity='0.2'/%3E%3C/svg%3E") repeat-x 0 0/120px 24px;animation:lineflow 2.4s linear infinite}
+  #lock .lk-water[style*="--t:0"]::before{opacity:0}
+  .lk-date{font:600 clamp(1rem,2.4vw,1.3rem)/1 Inter,sans-serif;letter-spacing:.04em;color:rgba(238,241,250,.8);animation:lkin .9s var(--ease) .1s both}
+  .lk-clock{font:800 clamp(4.6rem,15vw,9rem)/1 Sora,Inter,sans-serif;letter-spacing:-.04em;margin:6px 0 8px;font-variant-numeric:tabular-nums;
+    background:linear-gradient(180deg,#fff 15%,#9aa6c4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;animation:lkin 1s var(--ease) .2s both}
+  .lk-eyebrow{font-size:.76rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent2);font-weight:600;animation:lkin .9s var(--ease) .35s both}
+  .lk-stage{flex:1;width:100%;display:flex;align-items:center;justify-content:center;position:relative;min-height:0;margin:10px 0}
+  .lk-m{display:none;flex-direction:column;align-items:center;justify-content:center;gap:22px;width:100%;height:100%;position:relative}
+  .lk-m.on{display:flex;animation:lkin .5s var(--ease) both}
+  .lk-notes{width:min(430px,100%);display:flex;flex-direction:column;gap:9px}
+  .lk-n{display:flex;align-items:center;gap:14px;text-align:left;padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);
+    -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);box-shadow:0 10px 30px rgba(5,10,30,.25);animation:lkin .9s var(--ease) calc(.55s + var(--i) * .14s) both}
+  .lk-n .ic{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,192,255,.35),rgba(124,192,255,.12));border:1px solid rgba(255,255,255,.18)}
+  .lk-n .ic svg{width:20px;height:20px}
+  .lk-n b{display:block;font:600 .95rem/1.2 Inter,sans-serif}
+  .lk-n small{display:block;margin-top:2px;font-size:.8rem;color:rgba(238,241,250,.7);line-height:1.3}
+  @keyframes lkin{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  .slide{position:relative;width:min(320px,86vw);height:64px;border-radius:999px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;flex:none;
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+  .slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:calc(var(--x,0px) + 58px);background:rgba(255,255,255,.14);border-radius:999px}
+  .slide-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:46px;font:600 1.02rem Inter,sans-serif;letter-spacing:.02em;
+    background:linear-gradient(90deg,rgba(255,255,255,.38) 40%,#fff 50%,rgba(255,255,255,.38) 60%) 0 0/220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 2.6s linear infinite;opacity:calc(1 - var(--p,0) * 1.4)}
+  @keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+  .knob{position:absolute;left:5px;top:5px;width:52px;height:52px;border-radius:50%;border:0;background:#fff;color:#111d3d;display:grid;place-items:center;cursor:grab;
+    transform:translateX(var(--x,0px));transition:transform .5s cubic-bezier(.34,1.4,.64,1);box-shadow:0 6px 16px rgba(5,10,30,.3);animation:nudge 2.6s ease-in-out infinite}
+  .knob svg{width:24px;height:24px}
+  .knob:focus-visible{outline:2px solid #7cc0ff;outline-offset:3px}
+  .slide.drag .knob{transition:none;cursor:grabbing;animation:none}
+  .slide.drag::before{transition:none}
+  @keyframes nudge{0%,60%,100%{transform:translateX(var(--x,0px))}75%{transform:translateX(calc(var(--x,0px) + 9px))}}
+  /* dive */
+  .lk-m[data-m=dive]{touch-action:none;cursor:ns-resize}
+  .dv-ruler{position:absolute;left:max(0px,calc(50% - 300px));top:0;bottom:0;width:52px;
+    background:repeating-linear-gradient(180deg,rgba(255,255,255,.55) 0 2px,transparent 2px 70px) 0 0/52px 70px,repeating-linear-gradient(180deg,rgba(255,255,255,.28) 0 1px,transparent 1px 14px) 14px 0/38px 14px;
+    background-position-y:calc(var(--d,0) * -1400px);-webkit-mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent)}
+  .dv-rov{width:110px;color:#fff;opacity:.85;transform:translateY(calc(var(--d,0) * 26px));animation:subbob 4s ease-in-out infinite alternate}
+  .dv-rov svg{display:block;width:100%;height:auto}
+  .dv-depth{display:flex;align-items:baseline;gap:8px;font-family:Sora,Inter,sans-serif}
+  .dv-depth b{font-size:clamp(3.4rem,10vw,5.6rem);font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;background:linear-gradient(180deg,#fff 15%,#9aa6c4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .dv-depth span{font-size:1.4rem;font-weight:600;color:rgba(238,241,250,.7)}
+  .dv-sub{font-size:.85rem;letter-spacing:.06em;color:rgba(238,241,250,.65)}
+  /* sonar */
+  .son-wrap{position:relative;width:min(600px,92vw);height:min(300px,100%);border-radius:14px;overflow:hidden;background:rgba(5,10,28,.6);border:1px solid rgba(255,255,255,.18)}
+  .son-wrap canvas{display:block;width:100%;height:100%;cursor:crosshair;touch-action:none}
+  .son-hint{position:absolute;left:0;right:0;bottom:10px;text-align:center;padding:0 12px;font:600 .78rem/1.3 "Courier New",monospace;letter-spacing:.05em;color:#cfe3ff;pointer-events:none}
+  /* tide */
+  .td-text{font:600 1rem Inter,sans-serif;color:rgba(238,241,250,.85)}
+  .holdbtn{position:relative;overflow:hidden;width:min(300px,80vw);height:66px;border-radius:999px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.1);color:#fff;font:700 1.05rem Inter,sans-serif;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+  .holdbtn .fill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--t,0) * 100%);background:rgba(255,255,255,.25)}
+  .holdbtn .lbl{position:relative}
+  /* catch the shark */
+  .lk-m[data-m=shark]{align-items:stretch;justify-content:flex-start;gap:0}
+  .sk-count{position:absolute;top:0;left:0;right:0;text-align:center;font:600 .95rem Inter,sans-serif;color:rgba(238,241,250,.85)}
+  .lk-shark{position:absolute;left:0;top:0;width:120px;height:64px;background:var(--spr) center/100% 100% no-repeat;image-rendering:pixelated;cursor:pointer;touch-action:none;will-change:transform;filter:drop-shadow(0 8px 6px rgba(5,10,30,.3))}
+  .lk-shark.hit{animation:skhit .25s steps(2,end)}
+  @keyframes skhit{50%{filter:brightness(2) drop-shadow(0 8px 6px rgba(5,10,30,.3))}}
+  .lk-shark.caught{opacity:0;transition:opacity .5s}
+  /* mode switcher */
+  .lk-modes{display:flex;gap:2px;padding:5px;border-radius:999px;background:rgba(17,29,61,.55);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);animation:lkin .9s var(--ease) 1s both;max-width:94vw}
+  .lk-modes button{border:0;background:none;color:rgba(238,241,250,.6);font:600 .85rem Inter,sans-serif;padding:8px 15px;border-radius:999px;cursor:pointer;transition:color .2s,background .25s}
+  .lk-modes button:hover{color:#fff}
+  .lk-modes button.on{background:rgba(255,255,255,.17);color:#fff}
+  .lk-hint{margin-top:10px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,241,250,.5)}
+  @media (max-height:700px){.lk-notes .lk-n:nth-child(3){display:none}.lk-clock{font-size:clamp(3.6rem,12vw,6rem)}}
+  @media (max-width:420px){.lk-modes button{padding:8px 11px;font-size:.78rem}}
+  @media (prefers-reduced-motion: reduce){#lock *{animation:none!important}.slide-txt{background:none;color:rgba(255,255,255,.8);-webkit-background-clip:border-box}#lock{transition:opacity .4s}#lock.out{transform:none}}
 </style>
 </head>
 <body>
+<div id="lock" role="dialog" aria-label="Unlock portfolio" data-mode="slide">
+  <div class="lk-contours" aria-hidden="true"></div>
+  <div class="lk-deep" aria-hidden="true"></div>
+  <div class="lk-water" aria-hidden="true"></div>
+  <div class="waves" aria-hidden="true">
+    <svg class="w3" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+    <svg class="w2" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+    <svg class="w1" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0,50 C150,90 350,10 600,50 C850,90 1050,10 1200,50 C1350,90 1550,10 1800,50 C2050,90 2250,10 2400,50 L2400,120 L0,120 Z"/></svg>
+  </div>
+  <div class="lk-top">
+    <div class="lk-date" id="lkDate">&nbsp;</div>
+    <div class="lk-clock" id="lkClock">00:00</div>
+    <div class="lk-eyebrow">Portfolio · Oceanography ITB</div>
+  </div>
+  <div class="lk-stage">
+    <div class="lk-m on" data-m="slide">
+      <div class="lk-notes">
+        <div class="lk-n" style="--i:0"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><b>Based in Bandung</b><small>Oceanography graduate · Institut Teknologi Bandung</small></div></div>
+        <div class="lk-n" style="--i:1"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 9c2.5-3 4.5-3 7 0s4.5 3 7 0 3-3 6 0M2 15c2.5-3 4.5-3 7 0s4.5 3 7 0 3-3 6 0"/></svg></span><div><b>Open to opportunities</b><small>GIS · Ocean modelling · Hydrographic survey</small></div></div>
+        <div class="lk-n" style="--i:2"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><div><b>Raihan Ramadhan</b><small>Slide to unlock my portfolio</small></div></div>
+      </div>
+      <div class="slide" id="slide"><span class="slide-txt">slide to unlock</span>
+        <button class="knob" id="knob" type="button" aria-label="Slide to unlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="lk-m" data-m="dive" id="dvStage">
+      <div class="dv-ruler" aria-hidden="true"></div>
+      <div class="dv-rov" aria-hidden="true"><svg viewBox="0 0 160 90" fill="currentColor" style="overflow:visible"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M80 14C74 -6 40 -18 4 -34"/><rect x="30" y="14" width="100" height="20" rx="5"/><rect x="48" y="4" width="14" height="10" rx="2"/><rect x="98" y="4" width="14" height="10" rx="2"/><rect x="36" y="36" width="88" height="26" rx="3"/><rect x="44" y="42" width="22" height="14" rx="2" fill="#111d3d" opacity=".45"/><rect x="72" y="42" width="22" height="14" rx="2" fill="#111d3d" opacity=".45"/><rect x="16" y="42" width="18" height="14" rx="3"/><rect x="126" y="42" width="14" height="14" rx="3"/><rect x="138" y="38" width="16" height="22" rx="7"/><rect x="146" y="43" width="5" height="4" rx="1" fill="#111d3d" opacity=".6"/><rect x="146" y="51" width="5" height="4" rx="1" fill="#111d3d" opacity=".6"/><rect x="26" y="68" width="108" height="4" rx="2"/><rect x="42" y="62" width="3" height="8"/><rect x="114" y="62" width="3" height="8"/><path fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M120 62L132 76L146 72"/><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M146 72L155 67M146 72L155 79"/></svg></div>
+      <div class="dv-depth"><b id="dvD">0</b><span>m</span></div>
+      <div class="dv-sub">Scroll, drag down, or press ↓ to dive</div>
+    </div>
+    <div class="lk-m" data-m="sonar">
+      <div class="son-wrap"><canvas id="sonC"></canvas><div class="son-hint" id="sonH">Tap anywhere to send a sonar ping. Find the hidden wreck.</div></div>
+    </div>
+    <div class="lk-m" data-m="tide">
+      <div class="td-text">Hold the button to raise the tide</div>
+      <button class="holdbtn" id="tdBtn" type="button"><span class="fill"></span><span class="lbl">Hold</span></button>
+    </div>
+    <div class="lk-m" data-m="shark">
+      <div class="sk-count" id="skC">Catch the shark · 0/3</div>
+      <div class="lk-shark" id="lkShark"></div>
+    </div>
+  </div>
+  <div class="lk-modes" id="lkModes"><button type="button" data-m="slide" class="on">Slide</button><button type="button" data-m="dive">Dive</button><button type="button" data-m="sonar">Sonar</button><button type="button" data-m="tide">Tide</button><button type="button" data-m="shark">Catch</button></div>
+  <div class="lk-hint">Pick how to unlock · Enter to skip</div>
+</div>
+
 <div id="progress"></div>
 <div class="bg-map" aria-hidden="true"><div class="contours"></div><div class="grid"></div></div>
 
@@ -634,9 +768,9 @@
       <div class="gwrap reveal"><div class="gallery" data-g="hydrographic"></div></div>
     </div>
 
-    <div class="item reveal" style="margin-top:20px">
+    <div class="sec-head sub reveal"><h2><span class="t">Professional <em>project.</em></span></h2><span class="line"></span></div>
+    <div class="item reveal">
       <div class="card">
-        <span class="badge">Professional Project</span>
         <div class="org-head"><img class="org-logo" src="images/logos/kkp.png" alt=""><div><h3>Hydrodynamic Modelling Assistant</h3>
         <div class="org">Environmental Impact Assessment (AMDAL) Project — Client: Ministry of Marine Affairs and Fisheries (KKP)</div></div></div>
         <div class="when">Institut Teknologi Bandung · Jan 2026 – Jul 2026</div>
@@ -1136,6 +1270,113 @@
     const grid = document.querySelector('.bg-map .grid');
     if (grid) addEventListener('scroll', () => { grid.style.backgroundPosition = '0 ' + (-scrollY * .14).toFixed(0) + 'px'; }, { passive: true });
   })();
+
+  // ===== lock screen: 5 ways to unlock =====
+  (function () {
+    const lock = document.getElementById('lock'); if (!lock) return;
+    const root = document.documentElement;
+    if (!root.classList.contains('locked')) { lock.remove(); return; }
+    const $ = s => lock.querySelector(s), rnd = (a, b) => a + Math.random() * (b - a);
+    const clock = $('#lkClock'), date = $('#lkDate');
+    function tick() { const d = new Date(); clock.textContent = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); date.textContent = d.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' }); }
+    tick(); const iv = setInterval(tick, 1000);
+    try { lock.style.setProperty('--spr', getComputedStyle(document.getElementById('shark')).getPropertyValue('--spr')); } catch (e) {}
+    let mode = 'slide', done = false; const M = {};
+    function unlock() {
+      if (done) return; done = true;
+      try { sessionStorage.setItem('rr_unlocked', '1'); } catch (e) {}
+      scrollTo(0, 0); root.classList.remove('locked'); lock.classList.add('out'); clearInterval(iv); setTimeout(() => lock.remove(), 1300);
+    }
+    function setMode(m) {
+      if (done) return; M[mode] && M[mode].leave && M[mode].leave(); mode = m; lock.dataset.mode = m;
+      lock.querySelectorAll('.lk-m').forEach(e => e.classList.toggle('on', e.dataset.m === m));
+      lock.querySelectorAll('#lkModes button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+      M[m] && M[m].enter && M[m].enter();
+    }
+    $('#lkModes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.m); });
+
+    // --- 1) slide ---
+    const slide = $('#slide'), knob = $('#knob'); let smax = 0, sx0 = 0, sx = 0, sdrag = false;
+    const setX = v => { sx = v; slide.style.setProperty('--x', v + 'px'); slide.style.setProperty('--p', smax ? (v / smax).toFixed(3) : 0); };
+    const measure = () => { smax = slide.clientWidth - knob.offsetWidth - 10; };
+    knob.addEventListener('pointerdown', e => { if (done) return; measure(); sdrag = true; sx0 = e.clientX - sx; slide.classList.add('drag'); knob.setPointerCapture(e.pointerId); });
+    knob.addEventListener('pointermove', e => { if (sdrag) setX(Math.max(0, Math.min(smax, e.clientX - sx0))); });
+    const send = () => { if (!sdrag) return; sdrag = false; slide.classList.remove('drag'); sx >= smax * .82 ? (setX(smax), unlock()) : setX(0); };
+    knob.addEventListener('pointerup', send); knob.addEventListener('pointercancel', send);
+    M.slide = { enter() { measure(); setX(0); }, leave() { setX(0); } };
+
+    // --- 2) dive ---
+    const dvD = $('#dvD'), dvS = $('#dvStage'); let dd = 0, dly = 0, ddrag = false;
+    function setD(v) { dd = Math.max(0, Math.min(1, v)); lock.style.setProperty('--d', dd.toFixed(3)); dvD.textContent = Math.round(dd * 200); if (dd >= 1) unlock(); }
+    lock.addEventListener('wheel', e => { if (mode !== 'dive' || done) return; e.preventDefault(); setD(dd + e.deltaY / 1800); }, { passive: false });
+    dvS.addEventListener('pointerdown', e => { ddrag = true; dly = e.clientY; dvS.setPointerCapture(e.pointerId); });
+    dvS.addEventListener('pointermove', e => { if (!ddrag) return; setD(dd + (e.clientY - dly) / (innerHeight * .8)); dly = e.clientY; });
+    dvS.addEventListener('pointerup', () => ddrag = false); dvS.addEventListener('pointercancel', () => ddrag = false);
+    addEventListener('keydown', e => { if (mode !== 'dive' || done) return; if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); setD(dd + .06); } if (e.key === 'ArrowUp') { e.preventDefault(); setD(dd - .06); } });
+    M.dive = { enter() { setD(0); }, leave() { dd = 0; lock.style.setProperty('--d', 0); dvD.textContent = 0; } };
+
+    // --- 3) sonar ---
+    const cv = $('#sonC'), cx = cv.getContext('2d'), sh = $('#sonH'); let sw = 0, shh = 0, pings = [], tg = null, found = false, sraf = 0;
+    const HINT0 = 'Tap anywhere to send a sonar ping. Find the hidden wreck.';
+    function ssize() { const r = cv.getBoundingClientRect(); sw = r.width; shh = r.height; const dp = Math.min(devicePixelRatio || 1, 1.5); cv.width = sw * dp; cv.height = shh * dp; cx.setTransform(dp, 0, 0, dp, 0, 0); }
+    cv.addEventListener('pointerdown', e => {
+      if (found) return; const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, d = Math.hypot(x - tg.x, y - tg.y);
+      pings.push({ x, y, t: performance.now(), dots: Array.from({ length: 70 }, () => ({ a: rnd(0, 6.283), r: rnd(20, 150) })) });
+      if (pings.length > 6) pings.shift();
+      if (d < 38) { found = true; sh.textContent = 'Contact! Wreck found.'; setTimeout(unlock, 1100); }
+      else sh.textContent = d < 80 ? 'Very close…' : d < 150 ? 'Getting warmer' : d < 260 ? 'Faint echo' : 'Nothing here. Try elsewhere.';
+    });
+    function sloop(now) {
+      if (mode !== 'sonar' || done) return; sraf = requestAnimationFrame(sloop);
+      cx.clearRect(0, 0, sw, shh); cx.strokeStyle = 'rgba(255,255,255,.06)'; cx.lineWidth = 1; cx.beginPath();
+      for (let x = 0; x < sw; x += 30) { cx.moveTo(x, 0); cx.lineTo(x, shh); } for (let y = 0; y < shh; y += 30) { cx.moveTo(0, y); cx.lineTo(sw, y); } cx.stroke();
+      pings = pings.filter(p => (now - p.t) < 2600);
+      for (const p of pings) {
+        const el = Math.max(0, (now - p.t) / 1000), R = el * 150, fade = Math.max(0, 1 - el / 2.6);
+        cx.strokeStyle = `rgba(150,215,255,${.75 * fade})`; cx.lineWidth = 1.4; cx.beginPath(); cx.arc(p.x, p.y, R, 0, 6.283); cx.stroke();
+        for (const d of p.dots) if (d.r < R) { const a = Math.max(0, 1 - (R - d.r) / 110) * fade; cx.fillStyle = `rgba(150,215,255,${.7 * a})`; cx.fillRect(p.x + Math.cos(d.a) * d.r, p.y + Math.sin(d.a) * d.r, 3, 3); }
+        const dist = Math.hypot(tg.x - p.x, tg.y - p.y);
+        if (dist < R && dist < 270) { const a = Math.max(0, 1 - (R - dist) / 130) * (1 - dist / 290) * fade * 1.6; cx.fillStyle = `rgba(120,240,220,${Math.min(1, a)})`; cx.fillRect(tg.x - 5, tg.y - 5, 10, 10); }
+      }
+      if (found) { cx.fillStyle = '#7ef0dc'; cx.fillRect(tg.x - 16, tg.y - 3, 32, 6); cx.fillRect(tg.x - 4, tg.y - 10, 8, 7); cx.fillRect(tg.x - 10, tg.y + 3, 20, 4); }
+    }
+    M.sonar = { enter() { ssize(); tg = { x: rnd(50, sw - 50), y: rnd(40, shh - 60) }; pings = []; found = false; sh.textContent = HINT0; sraf = requestAnimationFrame(sloop); }, leave() { cancelAnimationFrame(sraf); } };
+
+    // --- 4) tide ---
+    const tb = $('#tdBtn'); let tt = 0, hold = false, tlast = 0, traf = 0;
+    const setT = v => { tt = Math.max(0, Math.min(1, v)); lock.style.setProperty('--t', tt.toFixed(3)); };
+    const hs = e => { e.preventDefault(); hold = true; }, he = () => { hold = false; };
+    tb.addEventListener('pointerdown', hs); addEventListener('pointerup', he); tb.addEventListener('pointercancel', he); tb.addEventListener('contextmenu', e => e.preventDefault());
+    tb.addEventListener('keydown', e => { if (e.key === ' ') { e.preventDefault(); hold = true; } }); tb.addEventListener('keyup', e => { if (e.key === ' ') hold = false; });
+    function tloop(now) {
+      if (mode !== 'tide' || done) return; traf = requestAnimationFrame(tloop); const dt = Math.min(.05, (now - tlast) / 1000); tlast = now;
+      setT(tt + (hold ? dt / 2.6 : -dt / 0.9)); if (tt >= 1) unlock();
+    }
+    M.tide = { enter() { hold = false; setT(0); tlast = performance.now(); traf = requestAnimationFrame(tloop); }, leave() { cancelAnimationFrame(traf); hold = false; setT(0); } };
+
+    // --- 5) catch the shark ---
+    const sk = $('#lkShark'), skC = $('#skC'); let hits = 0, sx_ = 0, sy_ = 0, svx = 0, svy = 0, spd = 2.2, tgx = 0, tgy = 0, tnext = 0, face = 1, kraf = 0;
+    function area() { const r = sk.parentElement.getBoundingClientRect(); return { w: r.width - 120, h: r.height - 64 }; }
+    function newT(a) { tgx = rnd(0, a.w); tgy = rnd(26, Math.max(40, a.h)); }
+    sk.addEventListener('pointerdown', e => {
+      e.preventDefault(); if (hits >= 3) return; hits++; skC.textContent = 'Catch the shark · ' + hits + '/3'; sk.classList.remove('hit'); void sk.offsetWidth; sk.classList.add('hit');
+      spd *= 1.45; if (hits >= 3) { skC.textContent = 'Caught him!'; sk.classList.add('caught'); setTimeout(unlock, 650); } else newT(area());
+    });
+    function kloop(now) {
+      if (mode !== 'shark' || done) return; kraf = requestAnimationFrame(kloop); const a = area();
+      if (now > tnext) { newT(a); tnext = now + rnd(500, 1000); }
+      const dx = tgx - sx_, dy = tgy - sy_, d = Math.hypot(dx, dy) || 1;
+      svx += dx / d * .22 * spd / 2.2; svy += dy / d * .22 * spd / 2.2; const v = Math.hypot(svx, svy); if (v > spd) { svx = svx / v * spd; svy = svy / v * spd; }
+      sx_ += svx; sy_ += svy; if (Math.abs(svx) > .3) face = svx > 0 ? 1 : -1;
+      sk.style.transform = `translate(${sx_.toFixed(1)}px,${sy_.toFixed(1)}px) scaleX(${-face})`;
+    }
+    M.shark = { enter() { hits = 0; spd = 2.2; skC.textContent = 'Catch the shark · 0/3'; sk.classList.remove('caught'); const a = area(); sx_ = rnd(0, a.w); sy_ = rnd(30, a.h); svx = svy = 0; newT(a); tnext = 0; kraf = requestAnimationFrame(kloop); }, leave() { cancelAnimationFrame(kraf); } };
+
+    // global shortcuts + start mode
+    addEventListener('keydown', e => { if (done) return; if (e.key === 'Enter') { e.preventDefault(); unlock(); } else if (mode === 'slide' && (e.key === ' ' || e.key === 'ArrowRight')) { e.preventDefault(); unlock(); } });
+    const q = (location.search.match(/[?&]mode=(\w+)/) || [])[1]; if (q && M[q] && q !== 'slide') setMode(q); else M.slide.enter();
+  })();
+
 
   // Animasi muncul saat discroll
   const io = new IntersectionObserver(es => es.forEach(e => {
