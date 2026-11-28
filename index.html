@@ -562,6 +562,26 @@
   .proj .body{order:1;flex:1}
   .proj .gwrap{order:2;padding:0 22px 22px}
   .proj .gwrap .gallery-hint{margin-top:8px}
+
+  /* lock: waves anchored to the left edge so they never get cut */
+  #lock .waves svg{left:0;right:auto}
+  #lock .waves{left:0;right:0;width:100%}
+  /* lock: skip button (arrow + hint) */
+  .lk-skip{appearance:none;-webkit-appearance:none;background:none;border:0;font:inherit;color:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 26px 6px;border-radius:18px;position:relative;z-index:3;pointer-events:auto;-webkit-tap-highlight-color:transparent}
+  .lk-skip:hover .lk-hint,.lk-skip:focus-visible .lk-hint{color:#fff}
+  .lk-skip:hover .dv-arrow{color:#fff}
+  .lk-skip:focus-visible{outline:2px solid rgba(255,255,255,.6);outline-offset:2px}
+  .lk-skip:active{transform:scale(.96)}
+  .lk-bottom{position:relative;z-index:3}
+  /* sea sound toggle */
+  #snd{position:fixed;left:18px;bottom:18px;z-index:2100;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:#fff;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-shadow:0 8px 22px rgba(3,8,24,.35);transition:transform .25s var(--ease),background .25s}
+  #snd:hover{transform:scale(1.08);background:rgba(255,255,255,.2)}
+  #snd svg{width:22px;height:22px;display:block}
+  #snd .off{display:none}
+  #snd.muted .on{display:none}#snd.muted .off{display:block}
+  #snd.muted{opacity:.75}
+  @media (max-width:860px){#snd{left:12px;bottom:12px;width:40px;height:40px}}
 </style>
 </head>
 <body>
@@ -583,8 +603,9 @@
     <div class="dv-depth"><b id="dvD">0</b><span>m</span></div>
     <div class="dv-sub">Scroll, drag down, or press ↓ to dive</div>
   </div>
-  <div class="lk-bottom"><span class="dv-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span><div class="lk-hint">Dive to enter · Enter to skip</div></div>
+  <div class="lk-bottom"><button type="button" class="lk-skip" id="lkSkip" aria-label="Skip and enter the portfolio"><span class="dv-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span><div class="lk-hint">Dive to enter · Enter to skip</div></button></div>
 </div>
+<button type="button" id="snd" class="muted" aria-label="Toggle ocean sound" title="Ocean sound"><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg></button>
 <div id="progress"></div>
 <div class="bg-map" aria-hidden="true"><div class="contours"></div><div class="grid"></div></div>
 
@@ -1228,6 +1249,7 @@
     stage.addEventListener('pointerdown', e => { drag = true; ly = e.clientY; stage.setPointerCapture(e.pointerId); });
     stage.addEventListener('pointermove', e => { if (!drag) return; setD(dd + (e.clientY - ly) / (innerHeight * .8)); ly = e.clientY; });
     stage.addEventListener('pointerup', () => drag = false); stage.addEventListener('pointercancel', () => drag = false);
+    const skipBtn = document.getElementById('lkSkip'); skipBtn && skipBtn.addEventListener('click', e => { e.stopPropagation(); unlock(); });
     addEventListener('keydown', e => {
       if (done) return;
       if (e.key === 'Enter') { e.preventDefault(); unlock(); }
@@ -1257,6 +1279,53 @@
       }
       requestAnimationFrame(loop);
     })(performance.now());
+  })();
+
+
+  // ===== ocean sound (generated live with Web Audio, no file needed) =====
+  (function () {
+    const btn = document.getElementById('snd'); if (!btn) return;
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) { btn.remove(); return; }
+    let ctx = null, master = null, on = false, built = false;
+    let pref = null; try { pref = localStorage.getItem('rr_sea'); } catch (e) {}
+    function noise(c, seconds, brown) {
+      const n = Math.floor(c.sampleRate * seconds), buf = c.createBuffer(2, n, c.sampleRate);
+      for (let ch = 0; ch < 2; ch++) { const d = buf.getChannelData(ch); let last = 0;
+        for (let i = 0; i < n; i++) { const w = Math.random() * 2 - 1; if (brown) { last = (last + .02 * w) / 1.02; d[i] = last * 3.5; } else d[i] = w * .6; } }
+      return buf;
+    }
+    function lfo(c, freq, depth, target) { const o = c.createOscillator(), g = c.createGain(); o.frequency.value = freq; g.gain.value = depth; o.connect(g); g.connect(target); o.start(); return o; }
+    function layer(c, buf, type, f, q, base, swellHz, swell, out) {
+      const s = c.createBufferSource(); s.buffer = buf; s.loop = true; s.loopStart = Math.random() * 2;
+      const fl = c.createBiquadFilter(); fl.type = type; fl.frequency.value = f; fl.Q.value = q;
+      const g = c.createGain(); g.gain.value = base;
+      s.connect(fl); fl.connect(g); g.connect(out); s.start(0, Math.random() * 3);
+      if (swellHz) lfo(c, swellHz, swell, g.gain);
+      return { fl, g };
+    }
+    function build() {
+      if (built) return; built = true;
+      ctx = new AC(); master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+      const brown = noise(ctx, 6, true), white = noise(ctx, 5, false);
+      layer(ctx, brown, 'lowpass', 520, .7, .22, .085, .17, master);   // slow surf swell
+      layer(ctx, brown, 'lowpass', 220, .5, .30, 0, 0, master);          // deep rumble
+      const wash = layer(ctx, white, 'bandpass', 1500, .45, .02, .11, .035, master); // foamy wash
+      lfo(ctx, .07, 380, wash.fl.frequency);
+      layer(ctx, white, 'highpass', 5200, .4, .006, .13, .004, master);  // fine hiss
+    }
+    function set(v) {
+      on = v; btn.classList.toggle('muted', !v); btn.setAttribute('aria-pressed', v ? 'true' : 'false');
+      try { localStorage.setItem('rr_sea', v ? '1' : '0'); } catch (e) {}
+      if (v) { build(); ctx.resume && ctx.resume(); const t = ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value, t); master.gain.linearRampToValueAtTime(.55, t + 3); }
+      else if (ctx) { const t = ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value, t); master.gain.linearRampToValueAtTime(0, t + .6); }
+    }
+    btn.addEventListener('click', e => { e.stopPropagation(); set(!on); });
+    // browsers only allow audio after a gesture: start on the first one (unless the visitor muted it before)
+    if (pref !== '0') {
+      const first = e => { if (e.target && e.target.closest && e.target.closest('#snd')) return; removeEventListener('pointerdown', first, true); removeEventListener('keydown', first, true); if (!on) set(true); };
+      addEventListener('pointerdown', first, true); addEventListener('keydown', first, true);
+    }
+    document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) ctx.suspend(); else if (on) ctx.resume(); });
   })();
 
   // Animasi muncul saat discroll
